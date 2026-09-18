@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waroonwork@gmail.com <WaroonRagwongsiri    +#+  +:+       +#+        */
+/*   By: smarttapon <smarttapon@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/01 13:48:18 by waroonwork@       #+#    #+#             */
-/*   Updated: 2026/08/16 16:43:29 by waroonwork@      ###   ########.fr       */
+/*   Updated: 2026/09/18 12:09:23 by smarttapon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
