@@ -5,8 +5,6 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: waroonwork@gmail.com <WaroonRagwongsiri    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 13:46:58 by waroonwork@       #+#    #+#             */
-/*   Updated: 2026/08/16 16:42:00 by waroonwork@      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +17,28 @@ static int	print_error(char *message)
 	return (EXIT_FAILURE);
 }
 
-static void	how_to_play(t_game *game)
+static void	how_to_play(void)
 {
-	mlx_put_string(game->mlx, "Controls", 10, 10);
-	mlx_put_string(game->mlx, "W / S : walk forward / backward", 10, 30);
-	mlx_put_string(game->mlx, "A / D : strafe left / right", 10, 50);
-	mlx_put_string(game->mlx, "<- / ->, Q / E : turn the camera", 10, 70);
-	mlx_put_string(game->mlx, "ESC : quit", 10, 90);
+	ft_putendl_fd("Controls", STDOUT_FILENO);
+	ft_putendl_fd("W / S : walk forward / backward", STDOUT_FILENO);
+	ft_putendl_fd("A / D : strafe left / right", STDOUT_FILENO);
+	ft_putendl_fd("<- / ->, Q / E : turn the camera", STDOUT_FILENO);
+	ft_putendl_fd("ESC : quit", STDOUT_FILENO);
+}
+
+static void	game_loop(t_game *game)
+{
+	double	now;
+
+	while (!glfwWindowShouldClose(game->window))
+	{
+		now = glfwGetTime();
+		game->delta_time = now - game->last_frame_time;
+		game->last_frame_time = now;
+		render_loop(game);
+		graphics_present(game);
+		glfwPollEvents();
+	}
 }
 
 static int	run_game(t_game *game)
@@ -37,9 +50,8 @@ static int	run_game(t_game *game)
 		graphics_destroy(game);
 		return (print_error("Graphics initialization failed"));
 	}
-	how_to_play(game);
-	mlx_loop_hook(game->mlx, render_loop, game);
-	mlx_loop(game->mlx);
+	how_to_play();
+	game_loop(game);
 	graphics_destroy(game);
 	return (EXIT_SUCCESS);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   graphics_destroy.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: waroonwork@gmail.com <WaroonRagwongsiri    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 14:59:19 by waroonwork@       #+#    #+#             */
-/*   Updated: 2026/08/01 15:22:58 by waroonwork@      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
 
 void	graphics_destroy(t_game *game)
@@ -23,19 +11,26 @@ void	graphics_destroy(t_game *game)
 	{
 		if (game->texture[i])
 		{
-			mlx_delete_texture(game->texture[i]);
+			free(game->texture[i]->pixels);
+			free(game->texture[i]);
 			game->texture[i] = NULL;
 		}
 		i++;
 	}
-	if (game->mlx && game->image)
+	if (game->shader_program)
+		glDeleteProgram(game->shader_program);
+	if (game->vbo)
+		glDeleteBuffers(1, &game->vbo);
+	if (game->vao)
+		glDeleteVertexArrays(1, &game->vao);
+	if (game->gl_texture)
+		glDeleteTextures(1, &game->gl_texture);
+	free(game->framebuffer);
+	game->framebuffer = NULL;
+	if (game->window)
 	{
-		mlx_delete_image(game->mlx, game->image);
-		game->image = NULL;
-	}
-	if (game->mlx)
-	{
-		mlx_terminate(game->mlx);
-		game->mlx = NULL;
+		glfwDestroyWindow(game->window);
+		game->window = NULL;
+		glfwTerminate();
 	}
 }

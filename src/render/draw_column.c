@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-static uint32_t	texture_color(mlx_texture_t *texture,
+static uint32_t	texture_color(t_texture *texture,
 		int x, int y, int shade)
 {
 	size_t	index;
@@ -43,7 +43,7 @@ static void	draw_ceiling(t_game *game, int x, int end)
 			game->scene.ceiling.b, ALPHA);
 	while (y < end)
 	{
-		mlx_put_pixel(game->image, x, y, color);
+		game->framebuffer[y * WIDTH + x] = color;
 		y++;
 	}
 }
@@ -58,7 +58,7 @@ static void	draw_floor(t_game *game, int x, int start)
 			game->scene.floor.b, ALPHA);
 	while (y < HEIGHT)
 	{
-		mlx_put_pixel(game->image, x, y, color);
+		game->framebuffer[y * WIDTH + x] = color;
 		y++;
 	}
 }
@@ -80,7 +80,7 @@ static void	draw_wall(t_game *game, t_ray *ray, int x)
 			texture_y = ray->texture->height - 1;
 		color = texture_color(ray->texture, ray->texture_x,
 				texture_y, ray->side == 1);
-		mlx_put_pixel(game->image, x, y, color);
+		game->framebuffer[y * WIDTH + x] = color;
 		y++;
 	}
 }

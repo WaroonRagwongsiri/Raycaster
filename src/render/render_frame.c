@@ -29,11 +29,8 @@ void	render_frame(t_game *game)
 	}
 }
 
-void	render_loop(void *parameter)
+void	render_loop(t_game *game)
 {
-	t_game	*game;
-
-	game = parameter;
 	player_input(game);
 	render_frame(game);
 }

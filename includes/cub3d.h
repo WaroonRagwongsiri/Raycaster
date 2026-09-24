@@ -19,7 +19,9 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../MLX42/include/MLX42/MLX42.h"
+# include <GLFW/glfw3.h>
+# include "gl_ext.h"
+# undef iszero
 # include "../libft/includes/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
 
@@ -82,6 +84,14 @@ typedef struct s_player
 	double	plane_y;
 }	t_player;
 
+typedef struct s_texture
+{
+	uint32_t	width;
+	uint32_t	height;
+	uint8_t		bytes_per_pixel;
+	uint8_t		*pixels;
+}	t_texture;
+
 typedef struct s_ray
 {
 	double			camera_x;
@@ -104,26 +114,35 @@ typedef struct s_ray
 	int				draw_start;
 	int				draw_end;
 	int				texture_x;
-	mlx_texture_t	*texture;
+	t_texture		*texture;
 }	t_ray;
 
 typedef struct s_game
 {
-	mlx_t			*mlx;
-	mlx_image_t		*image;
-	mlx_texture_t	*texture[TEX_COUNT];
-	t_scene			scene;
-	t_player		player;
+	GLFWwindow	*window;
+	uint32_t	*framebuffer;
+	GLuint		gl_texture;
+	GLuint		shader_program;
+	GLuint		vao;
+	GLuint		vbo;
+	GLint		sampler_uniform;
+	double		last_frame_time;
+	double		delta_time;
+	t_texture	*texture[TEX_COUNT];
+	t_scene		scene;
+	t_player	player;
 }	t_game;
 
 // Graphics
 bool		graphics_init(t_game *game);
 bool		texture_load_all(t_game *game);
 void		graphics_destroy(t_game *game);
+bool		build_shader_program(t_game *game);
+void		graphics_present(t_game *game);
 
 // Rendering
 void		render_frame(t_game *game);
-void		render_loop(void *parameter);
+void		render_loop(t_game *game);
 void		ray_init(t_game *game, t_ray *ray, int x);
 void		ray_dda(t_game *game, t_ray *ray);
 void		ray_project(t_ray *ray);

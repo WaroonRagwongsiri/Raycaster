@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   player_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waroonwork@gmail.com <WaroonRagwongsiri    +#+  +:+       +#+        */
+/*   By: waroon <waroon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 14:58:29 by waroonwork@       #+#    #+#             */
-/*   Updated: 2026/08/16 16:28:59 by waroonwork@      ###   ########.fr       */
+/*   Created: 2026/09/24 12:13:48 by waroon            #+#    #+#             */
+/*   Updated: 2026/09/24 12:13:50 by waroon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static bool	key_down(GLFWwindow *window, int key)
+{
+	return (glfwGetKey(window, key) == GLFW_PRESS);
+}
 
 static void	move_forward(t_game *game, double speed)
 {
@@ -29,24 +34,24 @@ void	player_input(t_game *game)
 	double	move;
 	double	rotation;
 
-	move = game->mlx->delta_time * MOVE_SPEED;
-	rotation = game->mlx->delta_time * ROT_SPEED;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+	move = game->delta_time * MOVE_SPEED;
+	rotation = game->delta_time * ROT_SPEED;
+	if (key_down(game->window, GLFW_KEY_ESCAPE))
+		glfwSetWindowShouldClose(game->window, GLFW_TRUE);
+	if (key_down(game->window, GLFW_KEY_W))
 		move_forward(game, move);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+	if (key_down(game->window, GLFW_KEY_S))
 		move_forward(game, -move);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+	if (key_down(game->window, GLFW_KEY_D))
 		move_sideways(game, move);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+	if (key_down(game->window, GLFW_KEY_A))
 		move_sideways(game, -move);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+	if (key_down(game->window, GLFW_KEY_RIGHT))
 		player_rotate(game, rotation);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+	if (key_down(game->window, GLFW_KEY_LEFT))
 		player_rotate(game, -rotation);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_E))
+	if (key_down(game->window, GLFW_KEY_E))
 		player_rotate(game, rotation);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_Q))
+	if (key_down(game->window, GLFW_KEY_Q))
 		player_rotate(game, -rotation);
 }
