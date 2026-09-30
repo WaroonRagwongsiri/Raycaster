@@ -14,7 +14,6 @@ In order to run this project use `make`
 - `make bonus` - create a bonus part of project
 - `make libft` - create archive for libft
 - `make gnl` - create archive for gnl
-- `make mlx` - create archive for mlx42
 
 MLX42 is cloned and built on the first `make`, so `cmake` and `glfw` have to be
 installed already.
