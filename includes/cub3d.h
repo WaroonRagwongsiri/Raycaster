@@ -19,6 +19,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# define GLFW_INCLUDE_NONE
 # include <GLFW/glfw3.h>
 # include "gl_ext.h"
 # undef iszero

@@ -1,9 +1,15 @@
 #ifndef GL_EXT_H
 # define GL_EXT_H
 
-# include <GL/gl.h>
-# include <GL/glext.h>
 # include <stdbool.h>
+
+/* macOS: the OpenGL framework exports core functions directly */
+# ifdef __APPLE__
+#  define GL_SILENCE_DEPRECATION
+#  include <OpenGL/gl3.h>
+# else
+#  include <GL/gl.h>
+#  include <GL/glext.h>
 
 extern PFNGLGENVERTEXARRAYSPROC		glGenVertexArrays;
 extern PFNGLBINDVERTEXARRAYPROC		glBindVertexArray;
@@ -29,6 +35,7 @@ extern PFNGLUSEPROGRAMPROC				glUseProgram;
 extern PFNGLDELETEPROGRAMPROC			glDeleteProgram;
 extern PFNGLGETUNIFORMLOCATIONPROC		glGetUniformLocation;
 extern PFNGLUNIFORM1IPROC				glUniform1i;
+# endif
 
 bool	gl_load_extensions(void);
 

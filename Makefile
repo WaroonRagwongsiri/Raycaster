@@ -19,6 +19,8 @@ CFLAGS			:=	-Wall -Wextra -Werror -g3
 # Linking differs per OS: macOS needs Apple frameworks instead of dl/pthread
 UNAME			:=	$(shell uname)
 ifeq ($(UNAME), Darwin)
+GLFW_CFLAGS		:=	$(shell pkg-config --cflags glfw3 2>/dev/null \
+						|| echo "-I/opt/homebrew/include")
 GLFW_FLAGS		:=	$(shell pkg-config --libs glfw3 2>/dev/null \
 						|| echo "-L/opt/homebrew/lib -lglfw")
 LDFLAGS			:=	$(GLFW_FLAGS) -framework Cocoa -framework OpenGL \
@@ -62,7 +64,8 @@ GNL_OBJS		:=	$(GNL_SRCS:.c=.o)
 CPPFLAGS		:=	-I$(INC_DIR) \
 					-I$(LIBFT_INC_DIR) \
 					-I$(GNL_INC_DIR) \
-					-I$(LIBS_DIR)
+					-I$(LIBS_DIR) \
+					$(GLFW_CFLAGS)
 
 # Main rule
 # Build order:

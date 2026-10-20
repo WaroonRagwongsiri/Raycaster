@@ -1,5 +1,14 @@
 #include "../../includes/cub3d.h"
 
+#ifdef __APPLE__
+
+bool	gl_load_extensions(void)
+{
+	return (true);
+}
+
+#else
+
 PFNGLGENVERTEXARRAYSPROC			glGenVertexArrays;
 PFNGLBINDVERTEXARRAYPROC			glBindVertexArray;
 PFNGLDELETEVERTEXARRAYSPROC		glDeleteVertexArrays;
@@ -64,3 +73,5 @@ bool	gl_load_extensions(void)
 		&& glGetProgramiv && glGetProgramInfoLog && glUseProgram
 		&& glGetUniformLocation && glUniform1i);
 }
+
+#endif
